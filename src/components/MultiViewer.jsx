@@ -66,7 +66,7 @@ class MultiViewer extends React.Component {
   }
 
   componentDidMount() {
-    fetchImageInfos(this.props.iiifUrls)
+    fetchImageInfos(this.props.iiifUrls, this.props.onlySecureOrigins)
       .then((imageInfos) => {
         this.setState({
           imageInfos: imageInfos
@@ -218,12 +218,14 @@ class MultiViewer extends React.Component {
 
 MultiViewer.propTypes = {
   iiifUrls: PropTypes.array.isRequired,
+  onlySecureOrigins: PropTypes.bool,
   width: PropTypes.string,
   height: PropTypes.string,
   showToolbar: PropTypes.bool
 }
 
 MultiViewer.defaultProps = {
+  onlySecureOrigins: false,
   width: '800px',
   height: '500px',
   showToolbar: true

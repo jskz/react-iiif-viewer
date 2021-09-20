@@ -23,8 +23,11 @@ export function fetchImageInfo(iiifUrl) {
   return axios.get(iiifUrl)
 }
 
-export function fetchImageInfos(iiifUrls) {
-  const imageInfoRequests = iiifUrls.map((iiifUrl) => fetchImageInfo(iiifUrl))
+export function fetchImageInfos(iiifUrls, onlySecureOrigins=false) {
+  const imageInfoRequests = iiifUrls
+    .map((iiifUrl) => onlySecureOrigins
+        ? fetchImageInfo(iiifUrl.replace('http:', 'https:'))
+        : fetchImageInfo(iiifUrl))
 
   return Promise.all(imageInfoRequests)
     .then((response) => {
